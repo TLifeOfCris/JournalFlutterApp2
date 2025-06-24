@@ -5,11 +5,15 @@ import 'package:provider/provider.dart';
 class ViewModelProvider extends ChangeNotifier{
 
   //Entries List
-  List<Journey> entries = [
+  final List<Journey> _entries = [
 
 
 
   ];
+
+  List<Journey> get entries => _entries;
+
+
 
 
   //Add entries method
@@ -19,7 +23,8 @@ class ViewModelProvider extends ChangeNotifier{
      id: newid,
      content: newcontent,
      mood: newmood,
-     timestamp: newtimestamp);
+     timestamp: DateTime.now()
+     );
 
      entries.add(newEntrie);
      notifyListeners();
