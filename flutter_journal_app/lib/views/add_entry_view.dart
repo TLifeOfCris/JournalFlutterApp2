@@ -25,7 +25,24 @@ class AddEntryView extends StatelessWidget {
             Text('How are you?',
             style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.w600),),
 
-            Text('Today $formattedDate')
+            Text('Today $formattedDate', style: TextStyle( decoration: TextDecoration.underline),),
+
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //Agregar las caritas
+
+                Text('feliz'),
+                SizedBox(width: 10,),
+                Text('MEH'),
+                SizedBox(width: 10,),
+                Text('triste'),
+                SizedBox(width: 10,),
+                Text('?')
+
+              ],
+            )
           ],
         ),
       ),
