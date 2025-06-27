@@ -19,6 +19,54 @@ class AddEntryView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+
+
+                        
+              Text('How are you?',
+              style: GoogleFonts.inter(fontSize: 40, 
+              fontWeight: FontWeight.w600, color: Colors.blueGrey),),
+              SizedBox(height: 15,),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.calendar_month, color: Colors.green, size: 20,),
+                  Text('Today $formattedDate', 
+                  style: TextStyle( decoration: TextDecoration.underline, color: Colors.green),),
+                ],
+              ),
+              SizedBox(height: 15,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //Agregar las caritas
+          
+                  OwnIcon(onTap: () {
+                    print(' feliz sleeccionado');
+                  },
+                    icon: Icons.sentiment_very_satisfied, color: Colors.yellow,),
+                  SizedBox(width: 10,),
+                  OwnIcon(onTap: () {
+                    print(' MEH sleeccionado');
+                  },icon:  Icons.sentiment_neutral, color: Colors.grey,),
+                  SizedBox(width: 10,),
+                  OwnIcon(onTap: () {
+                    print(' triste sleeccionado');
+                  },icon:  Icons.sentiment_dissatisfied, color:  Colors.blue,),
+                  SizedBox(width: 10,),
+                  OwnIcon(onTap: () {
+                    print(' no sé sleeccionado');
+                  },icon: Icons.help_outline, color: Colors.black,)
+          
+                ],
+          
+              
+              ),
+
+              
+          
+              SizedBox(height: 30,),
+              
               Text('WHAT HAVE YOU',
               style: GoogleFonts.inter(fontSize: 40, 
               fontWeight: FontWeight.w600, color: Colors.blueGrey),
@@ -27,41 +75,29 @@ class AddEntryView extends StatelessWidget {
               style: GoogleFonts.inter(fontSize: 40, 
               fontWeight: FontWeight.w600, color: Colors.blueGrey),),
           
-              SizedBox(height: 30,),
           
-              Text('How are you?',
-              style: GoogleFonts.inter(fontSize: 40, 
-              fontWeight: FontWeight.w600, color: Colors.blueGrey),),
-          
-              Text('Today $formattedDate', style: TextStyle( decoration: TextDecoration.underline),),
-          
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //Agregar las caritas
-          
-                  OwnIcon(icon: Icons.sentiment_very_satisfied, color: Colors.yellow,),
-                  SizedBox(width: 10,),
-                  OwnIcon(icon:  Icons.sentiment_neutral, color: Colors.grey,),
-                  SizedBox(width: 10,),
-                  OwnIcon(icon:  Icons.sentiment_dissatisfied, color:  Colors.blue,),
-                  SizedBox(width: 10,),
-                  OwnIcon(icon: Icons.help_outline, color: Colors.black,)
-          
-                ],
-          
-              
-              ),
-              Text(' Que fue lo que hiciste? '),
+
               SizedBox(
                 width: 380,
+                height: 150,
                 child: TextField(
                   decoration: InputDecoration(
-                    hintText: 'add note',
+                    hintText: 'add note...',
                     contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide(
+                        color: Colors.black, width: 2
+                      )
                     )
                   ),
                 ),
