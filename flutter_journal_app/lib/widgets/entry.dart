@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_journal_app/models/journy.dart';
+import 'package:intl/intl.dart';
+
 
 class EntryCard extends StatelessWidget {
   final Journey list;
   const EntryCard({super.key, required this.list});
 
+
+  String getFormattedDate(DateTime timestamp){
+    final now = DateTime.now();
+    final difference = now.difference(timestamp).inDays;
+    if (difference == 0){
+      return "Today";
+    }else if (difference == 1){
+      return "Yesterday";
+    } else {
+      return DateFormat('EEEE, d MMM').format(list.timestamp);
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+
     return Card(
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       elevation: 3,
@@ -21,6 +39,7 @@ class EntryCard extends StatelessWidget {
           //personalizar
           //TODAY, YESTERDAY, SUNDAY,ETC
           //child: Text("Viernes 13"),
+          
           child: Text(list.timestamp.toString()),
           
           ),
