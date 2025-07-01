@@ -14,15 +14,24 @@ class ViewModelProvider extends ChangeNotifier{
   List<Journey> get entries => _entries;
 
 
+late IconData _selectedMood;
+IconData get selectedMood => _selectedMood;
 
+  void setMood(IconData mood){
+
+    _selectedMood = mood;
+
+    notifyListeners();
+
+  }
 
   //Add entries method
-  void addEntrie(String newid, String newcontent, String newmood,  final newtimestamp){
+  void addEntrie(String newid, String newcontent, IconData newmood,  final newtimestamp){
 
     final newEntrie = Journey(
      id: newid,
      content: newcontent,
-     mood: newmood,
+     mood: _selectedMood,
      timestamp: DateTime.now()
      );
 
