@@ -7,6 +7,8 @@ class ViewModelProvider extends ChangeNotifier{
   //Entries List
   final List<Journey> _entries = [
 
+    Journey(id: '12344', content: 'Pueba', mood: Icons.sentiment_very_satisfied, timestamp: DateTime.now())
+
 
 
   ];
