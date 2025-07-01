@@ -27,6 +27,7 @@ class EntryCard extends StatelessWidget {
 
 
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -72,7 +73,7 @@ class EntryCard extends StatelessWidget {
                   Spacer(),
                   //Hora en la que se creó
                   //Text("12:00")
-                  Text(list.timestamp.toString()),
+                  Text(  DateFormat('jm').format(list.timestamp)),
                 ],
               )
             ],
