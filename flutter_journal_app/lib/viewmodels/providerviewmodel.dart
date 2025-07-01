@@ -7,7 +7,10 @@ class ViewModelProvider extends ChangeNotifier{
   //Entries List
   final List<Journey> _entries = [
 
-    Journey(id: '12344', content: 'Pueba', mood: Icons.sentiment_very_satisfied, timestamp: DateTime.now())
+    Journey(id: '12344', content: 'Pueba', mood: Icons.sentiment_very_satisfied, timestamp: DateTime.now()),
+    Journey(id: '12344', content: 'Prueba 2', mood: Icons.sentiment_very_satisfied, 
+    timestamp: DateTime.now().subtract(Duration(days: 1)) )
+
 
 
 
@@ -34,7 +37,7 @@ IconData get selectedMood => _selectedMood;
      id: newid,
      content: newcontent,
      mood: _selectedMood,
-     timestamp: DateTime.now()
+     timestamp: newtimestamp
      );
 
      entries.add(newEntrie);

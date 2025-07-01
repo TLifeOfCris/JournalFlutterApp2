@@ -10,14 +10,19 @@ class EntryCard extends StatelessWidget {
 
   String getFormattedDate(DateTime timestamp){
     final now = DateTime.now();
+
     final difference = now.difference(timestamp).inDays;
+    String formattedDate = DateFormat('MMM d').format(timestamp).toUpperCase();
+    String dayLabel;
     if (difference == 0){
-      return "Today";
+      return dayLabel = "TODAY $formattedDate";
     }else if (difference == 1){
-      return "Yesterday";
+      return dayLabel = "YESTERDAY $formattedDate";
     } else {
-      return DateFormat('EEEE, d MMM').format(list.timestamp);
-    }
+      String dayLabel = DateFormat('EEEE').format(timestamp).toUpperCase();
+      return '$dayLabel $formattedDate';
+    } 
+
   }
 
 
@@ -40,7 +45,14 @@ class EntryCard extends StatelessWidget {
           //TODAY, YESTERDAY, SUNDAY,ETC
           //child: Text("Viernes 13"),
           
-          child: Text(list.timestamp.toString()),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.adjust),
+              SizedBox(width: 8.0,),
+              Text(getFormattedDate(list.timestamp)),
+            ],
+          ),
           
           ),
           Padding(padding: const EdgeInsets.all(12.0),
