@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_journal_app/models/journy.dart';
 
 class EntryCard extends StatelessWidget {
-  const EntryCard({super.key});
+  final Journey list;
+  const EntryCard({super.key, required this.list});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,9 @@ class EntryCard extends StatelessWidget {
           color: Color.fromARGB(200, 119, 221, 119),
           padding: EdgeInsets.all(8),
           //personalizar
-          child: Text("Viernes 13"),
+          //TODAY, YESTERDAY, SUNDAY,ETC
+          //child: Text("Viernes 13"),
+          child: Text(list.timestamp.toString()),
           
           ),
           Padding(padding: const EdgeInsets.all(12.0),
@@ -28,11 +32,16 @@ class EntryCard extends StatelessWidget {
               Row(
                 children: [
                   //en el text tiene que ir el mood
-                  Text("Feliz", style: TextStyle(fontSize: 20),),
+                  //Text("Feliz", style: TextStyle(fontSize: 20),),
+                  Icon(list.mood),
                   SizedBox(width: 8,),
-                  Text("Hola"),
+                  //content
+                  //Text("Hola"),
+                  Text(list.content),
                   Spacer(),
-                  Text("12:00")
+                  //Hora en la que se creó
+                  //Text("12:00")
+                  Text(list.timestamp.toString()),
                 ],
               )
             ],
