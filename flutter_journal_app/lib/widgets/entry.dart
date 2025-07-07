@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_journal_app/models/journy.dart';
+import 'package:flutter_journal_app/viewmodels/providerviewmodel.dart';
 import 'package:intl/intl.dart';
 
 
@@ -25,7 +26,7 @@ class EntryCard extends StatelessWidget {
 
   }
 
-
+  
 
 
   @override
@@ -67,6 +68,8 @@ class EntryCard extends StatelessWidget {
                   //Text("Feliz", style: TextStyle(fontSize: 20),),
                   Icon(list.mood),
                   SizedBox(width: 8,),
+                  Text(getMoodLabel(list.mood)),
+                  SizedBox(width: 8.0,),
                   //content
                   //Text("Hola"),
                   Text(list.content),
