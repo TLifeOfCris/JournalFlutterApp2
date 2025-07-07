@@ -20,12 +20,6 @@ class ViewModelProvider extends ChangeNotifier{
 
 
 
-final Map<IconData, String >  moodLabeles = {
-  Icons.sentiment_very_satisfied: "FELIZ",
-  Icons.sentiment_dissatisfied: "TRISTE",
-  Icons.sentiment_neutral: "MEH",
-  Icons.help_outline: "?"
-};
 
 
 late IconData _selectedMood;
@@ -39,9 +33,7 @@ IconData get selectedMood => _selectedMood;
 
   }
 
-  String getMoodLabel(IconData mood){
-    return moodLabeles[mood] ?? "DESCONOCIDO";
-  }
+
 
   //Add entries method
   void addEntrie(String newid, String newcontent, IconData newmood,  final newtimestamp){
@@ -66,3 +58,14 @@ IconData get selectedMood => _selectedMood;
   }
 
 }
+
+//Fuera de ViewModelProvider 
+final Map<IconData, String >  moodLabels = {
+  Icons.sentiment_very_satisfied: "FELIZ",
+  Icons.sentiment_dissatisfied: "TRISTE",
+  Icons.sentiment_neutral: "MEH",
+  Icons.help_outline: "?"
+};
+  String getMoodLabel(IconData mood){
+    return moodLabels[mood] ?? "DESCONOCIDO";
+  }
