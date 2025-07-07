@@ -19,6 +19,15 @@ class ViewModelProvider extends ChangeNotifier{
   List<Journey> get entries => _entries;
 
 
+
+final Map<IconData, String >  moodlabeles = {
+  Icons.sentiment_very_satisfied: "FELIZ",
+  Icons.sentiment_dissatisfied: "TRISTE",
+  Icons.sentiment_neutral: "MEH",
+  Icons.help_outline: "?"
+};
+
+
 late IconData _selectedMood;
 IconData get selectedMood => _selectedMood;
 
@@ -39,6 +48,8 @@ IconData get selectedMood => _selectedMood;
      mood: _selectedMood,
      timestamp: newtimestamp
      );
+
+     
 
      entries.add(newEntrie);
      notifyListeners();
