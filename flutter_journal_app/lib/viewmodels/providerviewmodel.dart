@@ -57,7 +57,20 @@ IconData get selectedMood => _selectedMood;
     notifyListeners();
   }
 
+  //MÉTODO PARA ACTUALIZAR CONTENIDO
+  void UpdateContent(int index, String editedcontent){
+    entries[index].content = editedcontent;
+  }
+
 }
+
+
+
+
+
+
+
+
 
 //Fuera de ViewModelProvider 
 //TEXTO A LADO DEL ICONO

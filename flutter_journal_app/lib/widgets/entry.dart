@@ -33,7 +33,7 @@ class EntryCard extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: EdgeInsets.symmetric(vertical: 18, horizontal: 16),
       elevation: 3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
