@@ -66,7 +66,7 @@ class EntryCard extends StatelessWidget {
                 children: [
                   //en el text tiene que ir el mood
                   //Text("Feliz", style: TextStyle(fontSize: 20),),
-                  Icon(list.mood),
+                  Icon(list.mood, color: getMoodColor(list.mood),),
                   SizedBox(width: 8,),
                   Text(getMoodLabel(list.mood)),
                   SizedBox(width: 8.0,),

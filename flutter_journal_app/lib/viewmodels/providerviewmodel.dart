@@ -60,6 +60,7 @@ IconData get selectedMood => _selectedMood;
 }
 
 //Fuera de ViewModelProvider 
+//TEXTO A LADO DEL ICONO
 final Map<IconData, String >  moodLabels = {
   Icons.sentiment_very_satisfied: "FELIZ",
   Icons.sentiment_dissatisfied: "TRISTE",
@@ -69,3 +70,16 @@ final Map<IconData, String >  moodLabels = {
   String getMoodLabel(IconData mood){
     return moodLabels[mood] ?? "DESCONOCIDO";
   }
+
+//COLOR DEL ICONO
+
+final Map<IconData, Color> moodColor ={
+  Icons.sentiment_very_satisfied: Colors.yellow,
+  Icons.sentiment_dissatisfied: Colors.grey,
+  Icons.sentiment_neutral: Colors.blue,
+  Icons.help_outline: Colors.black
+};
+
+Color getMoodColor(IconData mood){
+  return moodColor[mood] ?? Colors.black;
+}
