@@ -20,7 +20,7 @@ class ViewModelProvider extends ChangeNotifier{
 
 
 
-final Map<IconData, String >  moodlabeles = {
+final Map<IconData, String >  moodLabeles = {
   Icons.sentiment_very_satisfied: "FELIZ",
   Icons.sentiment_dissatisfied: "TRISTE",
   Icons.sentiment_neutral: "MEH",
@@ -37,6 +37,10 @@ IconData get selectedMood => _selectedMood;
 
     notifyListeners();
 
+  }
+
+  String getMoodLabel(IconData mood){
+    return moodLabeles[mood] ?? "DESCONOCIDO";
   }
 
   //Add entries method
