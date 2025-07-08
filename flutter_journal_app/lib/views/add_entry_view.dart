@@ -67,22 +67,36 @@ class AddEntryView extends StatelessWidget {
                     print(' feliz sleeccionado');
                     viewModelProvider.setMood(Icons.sentiment_very_satisfied);
                   },
-                    icon: Icons.sentiment_very_satisfied, color: Colors.yellow,),
+                    icon: Icons.sentiment_very_satisfied, color: Colors.yellow,
+                    isSelected:  viewModelProvider.selectedMood == Icons.sentiment_very_satisfied,
+                    ),
+
                   SizedBox(width: 10,),
+
                   OwnIcon(onTap: () {
                     print(' MEH sleeccionado');
                     viewModelProvider.setMood(Icons.sentiment_neutral);
-                  },icon:  Icons.sentiment_neutral, color: Colors.grey,),
+                  },icon:  Icons.sentiment_neutral, color: Colors.grey,
+                  isSelected:  viewModelProvider.selectedMood == Icons.sentiment_neutral,
+                  ),
+
                   SizedBox(width: 10,),
+
                   OwnIcon(onTap: () {
                     print(' triste sleeccionado');
                     viewModelProvider.setMood(Icons.sentiment_dissatisfied);
-                  },icon:  Icons.sentiment_dissatisfied, color:  Colors.blue,),
+                  },icon:  Icons.sentiment_dissatisfied, color:  Colors.blue,
+                   isSelected: viewModelProvider.selectedMood == Icons.sentiment_dissatisfied,),
+
                   SizedBox(width: 10,),
+
                   OwnIcon(onTap: () {
                     print(' no sé sleeccionado');
                     viewModelProvider.setMood(Icons.help_outline);
-                  },icon: Icons.help_outline, color: Colors.black,)
+                  },icon: Icons.help_outline, color: Colors.black,
+                  isSelected: viewModelProvider.selectedMood == Icons.help_outline,
+                  
+                  )
           
                 ],
           
