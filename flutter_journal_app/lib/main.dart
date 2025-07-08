@@ -20,13 +20,22 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
+        //DEFINIR RUTAS
+        initialRoute: '/',
+        routes: {
+          
+          '/add': (context) => AddEntryView()
+        },
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            shape: CircleBorder()
+          )
 
         ),
         home: 
-        HomeView(),
-        //AddEntryView(),
+        //HomeView(),
+        AddEntryView(),
         
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_journal_app/viewmodels/providerviewmodel.dart';
+import 'package:flutter_journal_app/views/home_view.dart';
 import 'package:flutter_journal_app/widgets/reutilizables/iconwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +23,9 @@ class AddEntryView extends StatelessWidget {
     String newId = uuid.v4();
     
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back)),
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0 ),
@@ -88,6 +92,8 @@ class AddEntryView extends StatelessWidget {
               Text('BEEN UP TO?',
               style: GoogleFonts.inter(fontSize: 40, 
               fontWeight: FontWeight.w600, color: Colors.blueGrey),),
+
+              SizedBox(height: 30,),
           
           
 
@@ -121,8 +127,10 @@ class AddEntryView extends StatelessWidget {
 
               GestureDetector(
                 onTap: () {
-                  viewModelProvider.addEntrie(newId, note.text, viewModelProvider.selectedMood, formattedDate);
+                  final now = DateTime.now();
+                  viewModelProvider.addEntrie(newId, note.text, viewModelProvider.selectedMood, now);
                   print('Subido');
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeView()));
                 },
                 child: Container(
                   decoration: BoxDecoration(

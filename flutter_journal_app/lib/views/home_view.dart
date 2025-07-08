@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_journal_app/models/journy.dart';
 import 'package:flutter_journal_app/viewmodels/providerviewmodel.dart';
+import 'package:flutter_journal_app/views/add_entry_view.dart';
 import 'package:flutter_journal_app/widgets/entry.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +39,30 @@ class HomeView extends StatelessWidget {
             
             child:  EntryCard(list: journey));
         }),
+
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
+        
+        floatingActionButton: FloatingActionButton(
+
+
+          backgroundColor: Colors.amber,
+          
+          
+          
+          
+          
+          onPressed: 
+        
+        (){
+          Navigator.pushNamed(context, '/add');
+        },
+
+        
+
+        child: Icon(Icons.add),
+        
+        ),
       )
       
     ;
