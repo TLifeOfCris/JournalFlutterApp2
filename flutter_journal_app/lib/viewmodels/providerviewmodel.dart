@@ -62,6 +62,11 @@ IconData? get selectedMood => _selectedMood;
     entries[index].content = editedcontent;
   }
 
+  void ClearMood(){
+    _selectedMood = null;
+    notifyListeners();
+  }
+
 }
 
 class MoodInfo{

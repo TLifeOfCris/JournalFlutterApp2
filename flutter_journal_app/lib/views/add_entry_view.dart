@@ -29,6 +29,7 @@ class AddEntryView extends StatelessWidget {
 
 
           Navigator.of(context).push(MaterialPageRoute(builder: (context)=> HomeView()));
+          viewModelProvider.ClearMood();
 
 
 
@@ -160,6 +161,7 @@ class AddEntryView extends StatelessWidget {
                   }
                   viewModelProvider.addEntrie(newId, note.text, viewModelProvider.selectedMood!, now);
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeView()));
+                  viewModelProvider.ClearMood();
                   
                 },
                 child: Container(
