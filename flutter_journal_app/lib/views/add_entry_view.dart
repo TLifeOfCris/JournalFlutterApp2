@@ -9,12 +9,13 @@ import 'package:uuid/uuid.dart';
 
 
 class AddEntryView extends StatelessWidget {
-  const AddEntryView({super.key});
+  AddEntryView({super.key});
+   TextEditingController note = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
 
-    TextEditingController note = TextEditingController();
+    //TextEditingController note = TextEditingController();
     var viewModelProvider = context.watch<ViewModelProvider>();
 
     final now = DateTime.now();
@@ -24,7 +25,14 @@ class AddEntryView extends StatelessWidget {
     
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back)),
+        leading: IconButton(onPressed: (){
+
+
+          Navigator.of(context).push(MaterialPageRoute(builder: (context)=> HomeView()));
+
+
+
+        }, icon: Icon(Icons.arrow_back)),
       ),
       body: Center(
         child: Padding(
@@ -128,9 +136,17 @@ class AddEntryView extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   final now = DateTime.now();
-                  viewModelProvider.addEntrie(newId, note.text, viewModelProvider.selectedMood, now);
+                  
                   print('Subido');
+                  if (viewModelProvider.selectedMood == null || note.text.isEmpty ){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('PLEASE SELECT A MOOD or Write a content note'),)
+                    );
+                  return;
+                  }
+                  viewModelProvider.addEntrie(newId, note.text, viewModelProvider.selectedMood!, now);
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeView()));
+                  
                 },
                 child: Container(
                   decoration: BoxDecoration(

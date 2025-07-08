@@ -34,8 +34,8 @@ class MyApp extends StatelessWidget {
 
         ),
         home: 
-        //HomeView(),
-        AddEntryView(),
+        HomeView(),
+        //AddEntryView(),
         
       ),
     );

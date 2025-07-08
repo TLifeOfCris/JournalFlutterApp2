@@ -22,8 +22,8 @@ class ViewModelProvider extends ChangeNotifier{
 
 
 
-late IconData _selectedMood;
-IconData get selectedMood => _selectedMood;
+IconData? _selectedMood;
+IconData? get selectedMood => _selectedMood;
 
   void setMood(IconData mood){
 
@@ -41,7 +41,7 @@ IconData get selectedMood => _selectedMood;
     final newEntrie = Journey(
      id: newid,
      content: newcontent,
-     mood: _selectedMood,
+     mood: _selectedMood!,
      timestamp: newtimestamp
      );
 
@@ -64,7 +64,12 @@ IconData get selectedMood => _selectedMood;
 
 }
 
+class MoodInfo{
+  final String label;
+  final Color color;
 
+  MoodInfo(this.label, this.color);
+}
 
 
 
@@ -74,14 +79,18 @@ IconData get selectedMood => _selectedMood;
 
 //Fuera de ViewModelProvider 
 //TEXTO A LADO DEL ICONO
-final Map<IconData, String >  moodLabels = {
-  Icons.sentiment_very_satisfied: "FELIZ",
-  Icons.sentiment_dissatisfied: "TRISTE",
-  Icons.sentiment_neutral: "MEH",
-  Icons.help_outline: "?"
+final Map<IconData, MoodInfo>  moodinfoMap = {
+  Icons.sentiment_very_satisfied: MoodInfo("FELIZ", Colors.yellow),
+  Icons.sentiment_dissatisfied: MoodInfo('TRISTE', Colors.grey),
+  Icons.sentiment_neutral: MoodInfo('MEH', Colors.blue),
+  Icons.help_outline: MoodInfo('?', Colors.black)
 };
-  String getMoodLabel(IconData mood){
-    return moodLabels[mood] ?? "DESCONOCIDO";
+   String getMoodLabel(IconData mood){
+    return moodinfoMap[mood]?.label ?? "DESCONOCIDO";
+  }
+
+  Color getMoodTextColor(IconData mood){
+    return moodinfoMap[mood]?.color ?? Colors.black;
   }
 
 //COLOR DEL ICONO
