@@ -8,12 +8,15 @@ import 'package:provider/provider.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
     
     final JournalVM = Provider.of<ViewModelProvider>(context);
     final entries = JournalVM.entries.reversed.toList();
+    final groupedEntries = groupEntriesByDay(entries);
+    
     return Scaffold(
 
       body: ListView.builder(

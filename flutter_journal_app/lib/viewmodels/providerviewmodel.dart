@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_journal_app/models/journy.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ViewModelProvider extends ChangeNotifier{
@@ -61,10 +62,32 @@ IconData? get selectedMood => _selectedMood;
   void UpdateContent(int index, String editedcontent){
     entries[index].content = editedcontent;
   }
-
+  //MÉTODO PARA LIMPIAR EL MOOD PORQUE SINO SE QUEDA GUARDADO
   void ClearMood(){
     _selectedMood = null;
     notifyListeners();
+  }
+
+
+  Map<String, List<Journey>> groupEntriesByDay(List<Journey> entries){
+    Map<String, List<Journey>> groupedEntries = {};
+
+    for (var entry in entries){
+      //se convierte la fecha para agrupar por día 
+      String dayKey = DateFormat('yyyy-MM-dd').format(entry.timestamp);
+
+      //Si no existe se crea en una lista vacía
+      groupedEntries.putIfAbsent(dayKey, ()=> []);
+
+      groupedEntries[dayKey]!.add(entry);
+
+    }
+    groupedEntries.forEach((key, list){
+      list.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
+    });
+
+    return groupedEntries;
   }
 
 }
