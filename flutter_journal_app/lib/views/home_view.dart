@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_journal_app/models/journy.dart';
 import 'package:flutter_journal_app/viewmodels/providerviewmodel.dart';
 import 'package:flutter_journal_app/views/add_entry_view.dart';
+import 'package:flutter_journal_app/widgets/dayentrycard.dart';
 import 'package:flutter_journal_app/widgets/entry.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -15,17 +16,22 @@ class HomeView extends StatelessWidget {
     
     final JournalVM = Provider.of<ViewModelProvider>(context);
     final entries = JournalVM.entries.reversed.toList();
-    final groupedEntries = groupEntriesByDay(entries);
+    final grouped = JournalVM.groupEntriesByDay(entries);
+
+    final sortedKeys = grouped.keys.toList()
+    ..sort((a, b) => DateTime.parse(b).compareTo(DateTime.parse(a)));
     
     return Scaffold(
 
       body: ListView.builder(
-          itemCount: entries.length,
+          itemCount: sortedKeys.length,
           itemBuilder: (context, index){
-            final journey = entries[index];
+            final key = sortedKeys[index];
+            final entries = grouped[key]!;
+            final day = DateTime.parse(key);
           
           return Slidable(
-            key: ValueKey(journey.id),
+            key: ValueKey(sortedKeys),
             //revisar 
             endActionPane: ActionPane(motion: ScrollMotion(), children: [
               SlidableAction(onPressed: (_){
@@ -39,8 +45,9 @@ class HomeView extends StatelessWidget {
               )
             ]),
             
-            
-            child:  EntryCard(list: journey));
+            //aquí
+
+            child:  Dayentrycard(day: day, entries: entries));
         }),
 
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
