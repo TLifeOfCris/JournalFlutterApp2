@@ -34,6 +34,15 @@ IconData? get selectedMood => _selectedMood;
 
   }
 
+ 
+
+  //Borrar entries en la tarjeta
+
+  void deleteSpeciftEntry(Journey entry){
+    entries.remove(entry);
+    notifyListeners();
+  }
+
 
 
   //Add entries method
@@ -59,14 +68,21 @@ IconData? get selectedMood => _selectedMood;
   }
 
   //MÉTODO PARA ACTUALIZAR CONTENIDO
-  void UpdateContent(int index, String editedcontent){
-    entries[index].content = editedcontent;
+  void UpdateContent(String entryId, String newContent){
+    final index = _entries.indexWhere((entry) => entry.id == entryId);
+    if (index != -1){
+      _entries[index].content = newContent;
+      notifyListeners();
+    }
+    
   }
   //MÉTODO PARA LIMPIAR EL MOOD PORQUE SINO SE QUEDA GUARDADO
   void ClearMood(){
     _selectedMood = null;
     notifyListeners();
   }
+
+  //entradas por día
 
 
   Map<String, List<Journey>> groupEntriesByDay(List<Journey> entries){
@@ -133,3 +149,4 @@ final Map<IconData, Color> moodColor ={
 Color getMoodColor(IconData mood){
   return moodColor[mood] ?? Colors.black;
 }
+

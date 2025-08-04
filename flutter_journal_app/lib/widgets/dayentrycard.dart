@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_journal_app/models/journy.dart';
 import 'package:flutter_journal_app/viewmodels/providerviewmodel.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_journal_app/widgets/editpopout.dart';
 
 class Dayentrycard extends StatelessWidget {
   final DateTime day;
@@ -9,6 +12,39 @@ class Dayentrycard extends StatelessWidget {
   const Dayentrycard({super.key,
    required this.day,
     required this.entries});
+
+
+  void _editEntry(BuildContext context, Journey entry){
+  final controller = TextEditingController(text: entry.content);
+
+
+
+  showDialog(context: context, builder: (_) => AlertDialog(
+
+    title: Text('Editar entrada'),
+    content: TextField(
+      controller: controller,
+      maxLines: null,
+      decoration: InputDecoration(hintText: 'Editar content...'),
+
+    ),
+    actions: [
+      TextButton(onPressed: () => Navigator.of(context).pop(), 
+      child: Text('Cancelar'),
+      ),
+      ElevatedButton(onPressed: (){
+        final newContent = controller.text.trim();
+        if (newContent.isNotEmpty){
+          Provider.of<ViewModelProvider>(context, listen: false).UpdateContent(entry.id, newContent);
+        }
+        Navigator.of(context).pop();
+      }, child: Text('Guardar'))
+    ],
+
+  ),
+    
+  );
+}
 
 
   String getFormattedDate(DateTime timestamp){
@@ -57,20 +93,42 @@ class Dayentrycard extends StatelessWidget {
             ),
             //entradas de ese dia
             ...entries.map((entry){
-              return Padding(padding: EdgeInsets.all(12.0),
-              child: Row(
-                children: [
-                  Icon(entry.mood, color: getMoodColor(entry.mood)),
-                  const SizedBox(width: 8,),
-                  Text(getMoodLabel(entry.mood),
-                  style: TextStyle(color: getMoodColor(entry.mood)),
+              //AQUÍ LA VA LA LOGICA BORRAR SI NO FUNCIONA OK DE TODOS MODOS
+              //ESTA LA VERSIÓN ANTERIOR A ESTA EN GITHUB POR SI FALLA 
+              return Slidable(// el Slidable va dentro del Widget DayEntryCard porque es para los de adentro
+                key: ValueKey(entry.timestamp.toIso8601String()), //Esto es una clave unica 
+                endActionPane: ActionPane(
+                  motion: const ScrollMotion(), 
+                  children: [
+                    SlidableAction(onPressed: (_){
+                      Provider.of<ViewModelProvider>(context, listen: false).deleteSpeciftEntry(entry);
+                    },
+                    backgroundColor: Colors.red, //Color por mientras luego se cambia
+                    foregroundColor: Colors.white, //color por mientras luego se cambia
+                    icon:  Icons.delete, //Cambiar Icon
+                    label: 'Eliminar', //Cambiar label
+                    )
+                    
+                  ],),
                   
-                  ),
-                  const SizedBox(width: 8,),
-                  Expanded(child: Text(entry.content)),
-                  Text(DateFormat('jm').format(entry.timestamp))
-                ],
-              ),);
+                child: InkWell(
+                  onTap: () => _editEntry(context, entry),
+                  child: Padding(padding: EdgeInsets.all(12.0),
+                  child: Row(
+                    children: [
+                      Icon(entry.mood, color: getMoodColor(entry.mood)),
+                      const SizedBox(width: 8,),
+                      Text(getMoodLabel(entry.mood),
+                      style: TextStyle(color: getMoodColor(entry.mood)),
+                      
+                      ),
+                      const SizedBox(width: 8,),
+                      Expanded(child: Text(entry.content)),
+                      Text(DateFormat('jm').format(entry.timestamp))
+                    ],
+                  ),),
+                ),
+              );
             }).toList(),
           ],
         ),
