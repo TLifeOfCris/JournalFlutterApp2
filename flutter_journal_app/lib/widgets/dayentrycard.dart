@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_journal_app/models/journy.dart';
 import 'package:flutter_journal_app/viewmodels/providerviewmodel.dart';
+import 'package:flutter_journal_app/views/edit_entry.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_journal_app/widgets/editpopout.dart';
+
+
+//revisar que este correcto 
+
+
 
 class Dayentrycard extends StatelessWidget {
   final DateTime day;
@@ -14,8 +20,14 @@ class Dayentrycard extends StatelessWidget {
     required this.entries});
 
 
+
+    //revisar que este correcto
+
+  
+/*
   void _editEntry(BuildContext context, Journey entry){
   final controller = TextEditingController(text: entry.content);
+  IconData selectedMood = entry.mood;
 
 
 
@@ -35,7 +47,7 @@ class Dayentrycard extends StatelessWidget {
       ElevatedButton(onPressed: (){
         final newContent = controller.text.trim();
         if (newContent.isNotEmpty){
-          Provider.of<ViewModelProvider>(context, listen: false).UpdateContent(entry.id, newContent);
+          Provider.of<ViewModelProvider>(context, listen: false).UpdateContent(entry.id, newContent,);
         }
         Navigator.of(context).pop();
       }, child: Text('Guardar'))
@@ -44,6 +56,10 @@ class Dayentrycard extends StatelessWidget {
   ),
     
   );
+} */
+
+void _editEntry(BuildContext context, Journey entry){
+  Navigator.push(context, MaterialPageRoute(builder: (_) => EditEntryCard(entry: entry)));
 }
 
 
@@ -112,6 +128,7 @@ class Dayentrycard extends StatelessWidget {
                   ],),
                   
                 child: InkWell(
+                  //Checar esto 
                   onTap: () => _editEntry(context, entry),
                   child: Padding(padding: EdgeInsets.all(12.0),
                   child: Row(

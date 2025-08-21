@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_journal_app/models/journy.dart';
 import 'package:flutter_journal_app/viewmodels/providerviewmodel.dart';
 import 'package:provider/provider.dart';
-
+/*
 void _editEntry(BuildContext context, Journey entry){
   final controller = TextEditingController(text: entry.content);
 
@@ -25,7 +25,7 @@ void _editEntry(BuildContext context, Journey entry){
       ElevatedButton(onPressed: (){
         final newContent = controller.text.trim();
         if (newContent.isNotEmpty){
-          Provider.of<ViewModelProvider>(context, listen: false).UpdateContent(entry.id, newContent);
+          Provider.of<ViewModelProvider>(context, listen: false).UpdateContent(entry.id, newContent, );
         }
         Navigator.of(context).pop();
       }, child: Text('Guardar'))
@@ -34,4 +34,5 @@ void _editEntry(BuildContext context, Journey entry){
   ),
     
   );
-}
+} 
+*/

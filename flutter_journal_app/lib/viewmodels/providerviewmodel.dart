@@ -68,10 +68,16 @@ IconData? get selectedMood => _selectedMood;
   }
 
   //MÉTODO PARA ACTUALIZAR CONTENIDO
-  void UpdateContent(String entryId, String newContent){
+  //agregar new mood cuando sepas como hacerlo
+  void UpdateContent(String entryId, String newContent, IconData newMood){
     final index = _entries.indexWhere((entry) => entry.id == entryId);
     if (index != -1){
       _entries[index].content = newContent;
+      _entries[index] = Journey(id: _entries[index].id,
+       content: newContent,
+        //mood: _entries[index].mood,
+        mood: newMood,
+        timestamp: _entries[index].timestamp);
       notifyListeners();
     }
     
