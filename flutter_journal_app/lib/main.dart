@@ -4,6 +4,9 @@ import 'package:flutter_journal_app/firebase_options.dart';
 import 'package:flutter_journal_app/viewmodels/providerviewmodel.dart';
 import 'package:flutter_journal_app/views/home_view.dart';
 import 'package:flutter_journal_app/views/add_entry_view.dart';
+import 'package:flutter_journal_app/views/loginScreens/log_in_view.dart';
+import 'package:flutter_journal_app/views/loginScreens/sign_up_view.dart';
+import 'package:flutter_journal_app/views/loginScreens/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -27,11 +30,13 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
-        //DEFINIR RUTAS
+        
         initialRoute: '/',
         routes: {
           
-          '/add': (context) => AddEntryView()
+          '/add': (context) => AddEntryView(),
+          '/signIn': (context) => SignUpView(),
+          '/logIn': (context) => LogInView(),
         },
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -41,7 +46,11 @@ class MyApp extends StatelessWidget {
 
         ),
         home: 
-        HomeView(),
+        WelcomeScreen(
+          
+        )
+        //SignUpView()
+        //HomeView(),
         //AddEntryView(),
         
       ),
