@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
           '/add': (context) => AddEntryView(),
           '/signIn': (context) => SignUpView(),
           '/logIn': (context) => LogInView(),
+          '/homeview': (context) => HomeView(),
         },
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

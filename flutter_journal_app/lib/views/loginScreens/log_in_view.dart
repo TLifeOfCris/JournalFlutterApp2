@@ -21,13 +21,13 @@ class LogInView extends StatelessWidget {
             SizedBox(height: 100,),
             Image.asset('assets/images/2341.png', height: 400,),
             SizedBox(height: 30,),
-
+            //Agregar verificación 
             TextfieldLogs(texteo: 'Correo',
              iconData: Icons.email,
              controller: emailController,
              filledcolor: Colors.grey[100]!,
              iconColor: Colors.grey[700]!),
-
+            //Agregar verificación 
             TextfieldLogs(texteo: 'Contraseña', 
             iconData: Icons.password,
              iconColor: Colors.grey[700]!,
@@ -35,7 +35,8 @@ class LogInView extends StatelessWidget {
               controller: passwordController),
 
               SizedBox(height: 20,),
-
+              //Agregar logica firebase
+              //Agregar logica de log in 
               ButtonWelcomeScreen(texteo: 'LOG IN', onPressed: (){
                 Navigator.pushNamed(context, '/add');
               })
