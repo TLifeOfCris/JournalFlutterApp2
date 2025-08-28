@@ -23,6 +23,14 @@ class HomeView extends StatelessWidget {
     
     return Scaffold(
 
+      appBar: AppBar(
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.pushNamed(context, '/profileScreen');
+          }, icon: Icon(Icons.person))
+        ],
+      ),
+
       body: ListView.builder(
           itemCount: sortedKeys.length,
           itemBuilder: (context, index){

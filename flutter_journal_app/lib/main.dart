@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
           '/logIn': (context) => LogInView(),
           '/homeview': (context) => HomeView(),
           '/welcomeScreen': (context) => WelcomeScreen(),
+          '/profileScreen': (context) => ProfileScreen(),
         },
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -49,10 +50,10 @@ class MyApp extends StatelessWidget {
 
         ),
         home: 
-        ProfileScreen()
+        //ProfileScreen()
         //WelcomeScreen()
         //SignUpView()
-        //HomeView(),
+        HomeView(),
         //AddEntryView(),
         
       ),
