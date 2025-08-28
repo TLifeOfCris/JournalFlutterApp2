@@ -11,6 +11,11 @@ class SignUpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+      leading: IconButton(onPressed: (){
+      Navigator.pop(context);
+        }, icon: Icon(Icons.arrow_back_ios_new)),
+      ),
 
       body: Center(
         child: Column(
@@ -20,7 +25,7 @@ class SignUpView extends StatelessWidget {
           children: <Widget>[
             SizedBox(height: 40,),
             TextWidgetWelcomeScreen(texteo: 'SIGN UP'),
-            SizedBox(height: 100,),
+            SizedBox(height: 70,),
             Image.asset('assets/images/2341.png', height: 400,),
             SizedBox(height: 30,),
             //VER QUE SE NECESITA 
@@ -39,7 +44,10 @@ class SignUpView extends StatelessWidget {
             
             SizedBox(height: 20,),
 
-            ButtonWelcomeScreen(texteo: 'SIGN IN',  textColor: Colors.white ,color: Color(0xFF424242),onPressed: (){
+            ButtonWelcomeScreen(texteo: 'SIGN IN',  
+            textColor: Colors.white ,
+            color: Color(0xFF424242),
+            onPressed: (){
               Navigator.pushNamed(context, '/homeview');
             })
 

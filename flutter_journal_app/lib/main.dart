@@ -7,6 +7,7 @@ import 'package:flutter_journal_app/views/add_entry_view.dart';
 import 'package:flutter_journal_app/views/loginScreens/log_in_view.dart';
 import 'package:flutter_journal_app/views/loginScreens/sign_up_view.dart';
 import 'package:flutter_journal_app/views/loginScreens/welcome_screen.dart';
+import 'package:flutter_journal_app/views/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
           '/signIn': (context) => SignUpView(),
           '/logIn': (context) => LogInView(),
           '/homeview': (context) => HomeView(),
+          '/welcomeScreen': (context) => WelcomeScreen(),
         },
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -47,9 +49,8 @@ class MyApp extends StatelessWidget {
 
         ),
         home: 
-        WelcomeScreen(
-          
-        )
+        ProfileScreen()
+        //WelcomeScreen()
         //SignUpView()
         //HomeView(),
         //AddEntryView(),

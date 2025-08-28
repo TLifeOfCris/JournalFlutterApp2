@@ -11,37 +11,47 @@ class LogInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: 40,),
-            TextWidgetWelcomeScreen(texteo: 'LOG IN'),
-            SizedBox(height: 100,),
-            Image.asset('assets/images/2341.png', height: 400,),
-            SizedBox(height: 30,),
-            //Agregar verificación 
-            TextfieldLogs(texteo: 'Correo',
-             iconData: Icons.email,
-             controller: emailController,
-             filledcolor: Colors.grey[100]!,
-             iconColor: Colors.grey[700]!),
-            //Agregar verificación 
-            TextfieldLogs(texteo: 'Contraseña', 
-            iconData: Icons.password,
-             iconColor: Colors.grey[700]!,
-             filledcolor: Colors.grey[100]!,
-              controller: passwordController),
-
-              SizedBox(height: 20,),
-              //Agregar logica firebase
-              //Agregar logica de log in 
-              ButtonWelcomeScreen(texteo: 'LOG IN', onPressed: (){
-                Navigator.pushNamed(context, '/add');
-              })
-          ],
-
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+        }, icon: Icon(Icons.arrow_back_ios_new)),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 40,),
+                TextWidgetWelcomeScreen(texteo: 'LOG IN'),
+                SizedBox(height: 70,),
+                Image.asset('assets/images/2341.png', height: 400,),
+                SizedBox(height: 30,),
+                //Agregar verificación 
+                TextfieldLogs(texteo: 'Correo',
+                 iconData: Icons.email,
+                 controller: emailController,
+                 filledcolor: Colors.grey[100]!,
+                 iconColor: Colors.grey[700]!),
+                //Agregar verificación 
+                TextfieldLogs(texteo: 'Contraseña', 
+                iconData: Icons.password,
+                 iconColor: Colors.grey[700]!,
+                 filledcolor: Colors.grey[100]!,
+                  controller: passwordController),
+          
+                  SizedBox(height: 20,),
+                  //Agregar logica firebase
+                  //Agregar logica de log in 
+                  ButtonWelcomeScreen(texteo: 'LOG IN', onPressed: (){
+                    Navigator.pushNamed(context, '/add');
+                  })
+              ],
+          
+            ),
+          ),
         ),
       )
     );
