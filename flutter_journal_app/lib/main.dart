@@ -51,9 +51,9 @@ class MyApp extends StatelessWidget {
         ),
         home: 
         //ProfileScreen()
-        //WelcomeScreen()
+        WelcomeScreen()
         //SignUpView()
-        HomeView(),
+        //HomeView(),
         //AddEntryView(),
         
       ),
