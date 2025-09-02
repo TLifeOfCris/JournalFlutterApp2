@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart' hide AuthProvider;
 import 'package:flutter/material.dart';
+import 'package:flutter_journal_app/viewmodels/authProvider.dart';
 import 'package:flutter_journal_app/widgets/reutilizables/button_welcome_screen.dart';
 import 'package:flutter_journal_app/widgets/reutilizables/text_widget_welcome_screen.dart';
 import 'package:flutter_journal_app/widgets/reutilizables/textfield_logs.dart';
+import 'package:provider/provider.dart';
 
 class LogInView extends StatelessWidget {
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   LogInView({super.key});
 
   @override
@@ -45,8 +48,40 @@ class LogInView extends StatelessWidget {
                   SizedBox(height: 20,),
                   //Agregar logica firebase
                   //Agregar logica de log in 
-                  ButtonWelcomeScreen(texteo: 'LOG IN', onPressed: (){
-                    Navigator.pushNamed(context, '/add');
+                  ButtonWelcomeScreen(texteo: 'LOG IN', onPressed: () async {
+
+
+                    if (emailController.text.isEmpty || passwordController.text.isEmpty){
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Completa todos los campos')));
+                      return;
+                    }
+                    try{
+
+                      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+                      //intento para logearse 
+
+                      await  authProvider.signIn(emailController.text.trim(), passwordController.text.trim());
+
+                      if (authProvider.status == AuthStatus.authenticated){
+                        Navigator.pushReplacementNamed(context, '/add');
+                      }
+                    } on FirebaseAuthException catch (e){
+                      String errorMessage = 'Error al iniciar sesion';
+                      if (e.code == 'user-not-found'){
+                        errorMessage = 'No se encontró ninguna cuenta con ese correo.';
+                      } else if (e.code == 'wrong-password'){
+                        errorMessage = 'La contraseña es incorrecta.';
+                      } else if (e.code == 'invalid-email'){
+                        errorMessage = 'El correo no es válido.';
+                      }
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage)));
+                    } catch (e){
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Ocurrió un error inesperado $e')));
+                    }
+
+
+
+                    
                   })
               ],
           
