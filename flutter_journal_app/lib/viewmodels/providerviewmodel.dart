@@ -87,6 +87,36 @@ IconData? get selectedMood => _selectedMood;
     }
   }
 
+
+  //INICIALIZAR ENTRIES AL ABRIR APP
+
+
+  Future<void> fetchEnries() async{
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return ;
+    try {
+      final snapshot = await FirebaseFirestore.instance.collection('entries')
+      .where('userId', isEqualTo: user.uid).orderBy('timestamp', descending:  true).get();
+
+      _entries.clear();
+
+      for (var doc in snapshot.docs){
+        final data = doc.data();
+        _entries.add(Journey(id: doc.id, content: data['content'], mood: IconData(data['mood'], fontFamily: 'MaterialIcons'),
+         timestamp: (data['timestamp'] as Timestamp).toDate(),));
+      }
+      notifyListeners();
+
+    } catch (e) {
+      print('error al cargar entradas: $e');
+    }
+  }
+
+
+
+
+
+
   //Delete entrie from list method 
   void deleteEntrie(int index){
     entries.removeAt(index);
