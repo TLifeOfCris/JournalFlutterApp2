@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_journal_app/models/journy.dart';
 import 'package:intl/intl.dart';
@@ -114,44 +115,7 @@ IconData? get selectedMood => _selectedMood;
 
     //FIREBASE PROVIDER DE AQUI 
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-
-  Future<void> signUpWithEmail(String email, String password) async{
-    try{
-
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
-     // notifyListeners();
-     return null;
-
-    } on FirebaseAuthException catch (e){
-      if (e.code == 'weak-password'){
-        print('The password provided is too weak');
-
-      } else if (e.code == 'email-already-in-use'){
-        print('An account already exists with that email');
-      } 
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> SignIn(String email, String password) async{
-    try{
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-
-      //Guardar en Firestore
-
-      
-
-    }on FirebaseAuthException catch (e){
-      if (e.code == 'user-not-found'){
-        print('no user found for that email');
-      } else if (e.code == 'wrong-password'){
-        print('Wrong password try again');
-      }
-    }
-  }
 
 }
 

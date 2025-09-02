@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart' hide AuthProvider;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_journal_app/firebase_options.dart';
 import 'package:flutter_journal_app/viewmodels/providerviewmodel.dart';
+import 'package:flutter_journal_app/viewmodels/authProvider.dart';
+
 import 'package:flutter_journal_app/views/home_view.dart';
 import 'package:flutter_journal_app/views/add_entry_view.dart';
 import 'package:flutter_journal_app/views/loginScreens/log_in_view.dart';
@@ -27,7 +30,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ViewModelProvider() ),
+        ChangeNotifierProvider<ViewModelProvider>(create: (_) => ViewModelProvider(),
+
+        
+
+        
+        ),
+        ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
