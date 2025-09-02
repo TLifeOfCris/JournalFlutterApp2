@@ -47,6 +47,7 @@ IconData? get selectedMood => _selectedMood;
 
 
   //Add entries method
+  /*
   void addEntrie(String newid, String newcontent, IconData newmood,  final newtimestamp){
 
     final newEntrie = Journey(
@@ -60,6 +61,30 @@ IconData? get selectedMood => _selectedMood;
 
      entries.add(newEntrie);
      notifyListeners();
+  }
+  */
+
+  //Add entries method
+
+  Future<void> addEntrie(String newContent, IconData newMood) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final timestamp = DateTime.now();
+
+    try {
+      DocumentReference docRef = await FirebaseFirestore.instance.collection('entries').add({
+        'content': newContent,
+        'mood': newMood,
+        'timestamp': timestamp,
+        'userId': user.uid
+      });
+
+      final newEntry = Journey(id: docRef.id, content: newContent, mood: newMood, timestamp: timestamp);
+      notifyListeners();
+    } catch (e){
+      print('Error al guardar en Firestore: $e');
+    }
   }
 
   //Delete entrie from list method 
