@@ -159,7 +159,7 @@ class AddEntryView extends StatelessWidget {
                     );
                   return;
                   }
-                  viewModelProvider.addEntrie(newId, note.text, viewModelProvider.selectedMood!, now);
+                  viewModelProvider.addEntrie(note.text, viewModelProvider.selectedMood!);
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeView()));
                   viewModelProvider.ClearMood();
                   

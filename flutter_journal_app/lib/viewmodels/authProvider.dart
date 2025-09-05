@@ -35,7 +35,7 @@ class AuthProvider with ChangeNotifier{
     } catch (e) {
       _status = AuthStatus.unauthenticated;
       notifyListeners();
-      rethrow;
+      //rethrow;
     }
   }
 
@@ -48,7 +48,7 @@ class AuthProvider with ChangeNotifier{
     } catch(e){
       _status = AuthStatus.unauthenticated;
       notifyListeners();
-      rethrow;
+      //rethrow;
     }
   }
 

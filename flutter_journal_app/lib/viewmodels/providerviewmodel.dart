@@ -39,9 +39,14 @@ IconData? get selectedMood => _selectedMood;
 
   //Borrar entries en la tarjeta
 
-  void deleteSpeciftEntry(Journey entry){
-    entries.remove(entry);
-    notifyListeners();
+  void deleteSpeciftEntry(Journey entry) async {
+    try{
+      await FirebaseFirestore.instance.collection('entries').doc(entry.id).delete();
+      _entries.remove(entry);
+      notifyListeners();
+    } catch (e){
+      print('Error al eliminar entry: $e');
+    }
   }
 
 
@@ -81,6 +86,7 @@ IconData? get selectedMood => _selectedMood;
       });
 
       final newEntry = Journey(id: docRef.id, content: newContent, mood: newMood, timestamp: timestamp);
+      _entries.add(newEntry);
       notifyListeners();
     } catch (e){
       print('Error al guardar en Firestore: $e');
@@ -118,10 +124,14 @@ IconData? get selectedMood => _selectedMood;
 
 
   //Delete entrie from list method 
+
+  
   void deleteEntrie(int index){
     entries.removeAt(index);
     notifyListeners();
   }
+  
+  
 
   //MÉTODO PARA ACTUALIZAR CONTENIDO
   //agregar new mood cuando sepas como hacerlo
