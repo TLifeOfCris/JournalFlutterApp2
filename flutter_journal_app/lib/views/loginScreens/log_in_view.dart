@@ -62,8 +62,10 @@ class LogInView extends StatelessWidget {
 
                       await  authProvider.signIn(emailController.text.trim(), passwordController.text.trim());
 
-                      if (authProvider.status == AuthStatus.authenticated){
-                        Navigator.pushReplacementNamed(context, '/add');
+                      //if (authProvider.status == AuthStatus.authenticated){
+                      if (FirebaseAuth.instance.currentUser != null){
+                        //Navigator.pushReplacementNamed(context, '/homeview');
+                        Navigator.pushNamedAndRemoveUntil(context, '/homeview', (route) => false );
                       }
                     } on FirebaseAuthException catch (e){
                       String errorMessage = 'Error al iniciar sesion';

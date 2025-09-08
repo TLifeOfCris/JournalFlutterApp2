@@ -49,6 +49,12 @@ IconData? get selectedMood => _selectedMood;
     }
   }
 
+  Future <void> loadEntries() async{
+
+    
+
+  }
+
 
 
   //Add entries method

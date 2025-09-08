@@ -34,8 +34,10 @@ class AuthProvider with ChangeNotifier{
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
     } catch (e) {
       _status = AuthStatus.unauthenticated;
+
       notifyListeners();
-      //rethrow;
+      
+      rethrow;
     }
   }
 
@@ -48,7 +50,8 @@ class AuthProvider with ChangeNotifier{
     } catch(e){
       _status = AuthStatus.unauthenticated;
       notifyListeners();
-      //rethrow;
+
+      rethrow;
     }
   }
 

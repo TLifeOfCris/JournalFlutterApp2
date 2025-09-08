@@ -88,7 +88,8 @@ class SignUpView extends StatelessWidget {
                 await authProvider.signUp(email, password);
         
                 if (authProvider.status == AuthStatus.authenticated){
-                  Navigator.pushNamed(context, '/homeview');
+                  Navigator.pushNamed(context, '/welcomeScreen');
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('registro exitoso')));
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: 
                   Text('Erorr al registrarse')));
