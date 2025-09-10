@@ -4,6 +4,7 @@ import 'package:flutter_journal_app/models/journy.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_journal_app/utils/mood_utils.dart';
 
 class ViewModelProvider extends ChangeNotifier{
   //Entries List
@@ -48,10 +49,35 @@ IconData? get selectedMood => _selectedMood;
       print('Error al eliminar entry: $e');
     }
   }
-
+  //Cargar entradas en FireStore
   Future <void> loadEntries() async{
 
-    
+    //buscar usuario autentificado en firebase
+    final user = FirebaseAuth.instance.currentUser;
+
+    //si no está autentificado termina la función
+    if (user == null) return;
+
+    //busca en firestore la colección de notas del usuario actualizadas.
+
+    try {
+      final snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .doc(user.uid)
+      .collection('entries')
+      .orderBy('timestamp', descending: true)
+      .get();
+
+      _entries.clear(); //limpia la lista actual
+
+      _entries.addAll(snapshot.docs.map((doc) => Journey.fromFirestore(doc)).toList());
+      notifyListeners();
+
+    } catch (e) {
+      print('Error al cargar entradas: $e');
+    }
+
+
 
   }
 
@@ -205,6 +231,8 @@ class MoodInfo{
 
 //Fuera de ViewModelProvider 
 //TEXTO A LADO DEL ICONO
+
+/*
 final Map<IconData, MoodInfo>  moodinfoMap = {
   Icons.sentiment_very_satisfied: MoodInfo("FELIZ", Colors.yellow),
   Icons.sentiment_dissatisfied: MoodInfo('TRISTE', Colors.grey),
@@ -231,4 +259,4 @@ final Map<IconData, Color> moodColor ={
 Color getMoodColor(IconData mood){
   return moodColor[mood] ?? Colors.black;
 }
-
+*/

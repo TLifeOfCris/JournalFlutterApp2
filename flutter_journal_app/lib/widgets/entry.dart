@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_journal_app/models/journy.dart';
+import 'package:flutter_journal_app/utils/mood_utils.dart';
 import 'package:flutter_journal_app/viewmodels/providerviewmodel.dart';
 import 'package:intl/intl.dart';
 

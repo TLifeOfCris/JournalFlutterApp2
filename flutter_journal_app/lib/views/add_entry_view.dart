@@ -149,7 +149,8 @@ class AddEntryView extends StatelessWidget {
 
 
               GestureDetector(
-                onTap: () {
+                
+                onTap:  () async {
                   final now = DateTime.now();
                   
                   print('Subido');
@@ -159,9 +160,11 @@ class AddEntryView extends StatelessWidget {
                     );
                   return;
                   }
-                  viewModelProvider.addEntrie(note.text, viewModelProvider.selectedMood!);
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeView()));
+                  await viewModelProvider.addEntrie(note.text, viewModelProvider.selectedMood!);
+                  await viewModelProvider.loadEntries(); //aqui se cargan las nuevas entradas
                   viewModelProvider.ClearMood();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeView()));
+                  
                   
                 },
                 child: Container(
