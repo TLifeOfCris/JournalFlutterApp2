@@ -13,13 +13,25 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //esto se agregó
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      Provider.of<ViewModelProvider>(context, listen: false).fetchEntries();
+    });
     
     final JournalVM = Provider.of<ViewModelProvider>(context);
-    final entries = JournalVM.entries.reversed.toList();
+    //ESTO LO VAMOS A CAMBIAR
+    //final entries = JournalVM.entries.reversed.toList();
+    //POR ESTO ya que .reversed estaba afectando el orden y causando inconsistencias
+    final entries = JournalVM.entries;
     final grouped = JournalVM.groupEntriesByDay(entries);
 
     final sortedKeys = grouped.keys.toList()
     ..sort((a, b) => DateTime.parse(b).compareTo(DateTime.parse(a)));
+
+    print('Agrupación por fecha:');
+    for (var key in sortedKeys){
+      print('$key -> ${grouped[key]!.length} entradas');
+    }
     
     return Scaffold(
 
@@ -38,8 +50,8 @@ class HomeView extends StatelessWidget {
             final entries = grouped[key]!;
             final day = DateTime.parse(key);
           
-          return Slidable(
-            key: ValueKey(sortedKeys),
+          return /* Slidable(
+            key: ValueKey(key),
             //revisar 
             endActionPane: ActionPane(motion: ScrollMotion(), children: [
               SlidableAction(onPressed: (_){
@@ -55,7 +67,9 @@ class HomeView extends StatelessWidget {
             
             //aquí
 
-            child:  Dayentrycard(day: day, entries: entries));
+            
+            */
+              Dayentrycard(day: day, entries: entries, key: ValueKey(key),);
         }),
 
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

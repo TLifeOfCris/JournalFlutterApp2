@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_journal_app/viewmodels/authProvider.dart';
 import 'package:flutter_journal_app/widgets/reutilizables/button_welcome_screen.dart';
 import 'package:flutter_journal_app/widgets/reutilizables/text_widget_welcome_screen.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -52,8 +54,16 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(height: 30,),
 
 
-              ButtonWelcomeScreen(texteo: 'LOG OUT', onPressed: (){
-                Navigator.pushNamed(context, '/welcomeScreen');
+              ButtonWelcomeScreen(texteo: 'LOG OUT', onPressed: () async {
+
+                final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+                await authProvider.signOut();
+
+                print('exitoso');
+
+
+                Navigator.pushNamedAndRemoveUntil(context, '/welcomeScreen', (Route<dynamic> route) => false);
               })
 
           ]

@@ -15,6 +15,12 @@ class AddEntryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final viewModel = Provider.of<ViewModelProvider>(context, listen: false);
+
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      viewModel.loadEntries();
+    });
+
     //TextEditingController note = TextEditingController();
     var viewModelProvider = context.watch<ViewModelProvider>();
 
@@ -161,9 +167,9 @@ class AddEntryView extends StatelessWidget {
                   return;
                   }
                   await viewModelProvider.addEntrie(note.text, viewModelProvider.selectedMood!);
-                  await viewModelProvider.loadEntries(); //aqui se cargan las nuevas entradas
+                  //await viewModelProvider.loadEntries(); //aqui se cargan las nuevas entradas
                   viewModelProvider.ClearMood();
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeView()));
+                 Navigator.pop(context);
                   
                   
                 },

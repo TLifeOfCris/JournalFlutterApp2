@@ -10,9 +10,9 @@ class ViewModelProvider extends ChangeNotifier{
   //Entries List
   final List<Journey> _entries = [
 
-    Journey(id: '12344', content: 'Pueba', mood: Icons.sentiment_very_satisfied, timestamp: DateTime.now()),
-    Journey(id: '12344', content: 'Prueba 2', mood: Icons.sentiment_very_satisfied, 
-    timestamp: DateTime.now().subtract(Duration(days: 1)) )
+    //Journey(id: '12344', content: 'Pueba', mood: Icons.sentiment_very_satisfied, timestamp: DateTime.now()),
+    //Journey(id: '12344', content: 'Prueba 2', mood: Icons.sentiment_very_satisfied, 
+    //timestamp: DateTime.now().subtract(Duration(days: 1)) )
 
 
 
@@ -109,6 +109,7 @@ IconData? get selectedMood => _selectedMood;
 
     final timestamp = DateTime.now();
 
+   /*
     try {
       DocumentReference docRef = await FirebaseFirestore.instance.collection('entries').add({
         'content': newContent,
@@ -120,6 +121,27 @@ IconData? get selectedMood => _selectedMood;
       final newEntry = Journey(id: docRef.id, content: newContent, mood: newMood, timestamp: timestamp);
       _entries.add(newEntry);
       notifyListeners();
+    */
+
+    try{
+      final entryRef = FirebaseFirestore.instance.collection('users')
+      .doc(user.uid)
+      .collection('entries')
+      .doc();
+
+      await entryRef.set({
+        'content': newContent,
+        'mood': getMoodLabel(newMood),
+        'timestamp': timestamp,
+        'userId': user.uid
+      });
+      final newEntry = Journey(
+      id: entryRef.id,
+       content: newContent,
+       mood: IconData(newMood.codePoint, fontFamily: 'MaterialIcons'),
+      timestamp: timestamp);
+      _entries.add(newEntry);
+      notifyListeners();
     } catch (e){
       print('Error al guardar en Firestore: $e');
     }
@@ -129,12 +151,21 @@ IconData? get selectedMood => _selectedMood;
   //INICIALIZAR ENTRIES AL ABRIR APP
 
 
-  Future<void> fetchEnries() async{
+  Future<void> fetchEntries() async{
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return ;
     try {
+      //Cambiar esta parte 
+      /*
       final snapshot = await FirebaseFirestore.instance.collection('entries')
       .where('userId', isEqualTo: user.uid).orderBy('timestamp', descending:  true).get();
+      */
+
+      final snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .doc(user.uid)
+      .collection('entries').
+      orderBy('timestamp', descending: true).get();
 
       _entries.clear();
 

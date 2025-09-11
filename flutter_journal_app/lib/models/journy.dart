@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_journal_app/utils/mood_utils.dart';
 
@@ -23,10 +24,22 @@ class Journey {
 
   factory Journey.fromFirestore(DocumentSnapshot doc){
     final data = doc.data() as Map<String, dynamic>;
-    return Journey(id: data['id'] ?? '',
+    final moodRaw = data['mood'];
+    IconData moodIcon;
+    if (moodRaw is int){
+      //si es int (codePoint), reconstruimos el icono directamente
+      moodIcon = IconData(moodRaw, fontFamily: 'MaterialIcons');
+    } else if (moodRaw is String){
+      moodIcon = getMoodIconFromLabel(moodRaw);
+    } else {
+      moodIcon = Icons.help_outline;
+    }
+   /* return Journey(id: data['id'] ?? '',
      content: data['content'] ?? '',
       mood: getMoodIconFromLabel(data['mood'] ?? '?'),
        timestamp: (data['timestamp'] as Timestamp).toDate(),);
+  */
+    return Journey(id: doc.id, content: data['content'], mood: moodIcon, timestamp: (data['timestamp'] as Timestamp).toDate());
   }
 
   //método para guardar en firestore
