@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_journal_app/utils/mood_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ViewModelProvider extends ChangeNotifier{
   //Entries List
@@ -41,9 +42,20 @@ IconData? get selectedMood => _selectedMood;
   //Borrar entries en la tarjeta
 
   void deleteSpeciftEntry(Journey entry) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null){
+      print('no hay usuario autenticado');
+    }
     try{
-      await FirebaseFirestore.instance.collection('entries').doc(entry.id).delete();
+      await FirebaseFirestore.instance
+      .collection('users')
+      .doc(user!.uid)  // <-- ahora 'user' está definido aquí
+      .collection('entries')
+      .doc(entry.id)
+      .delete();
       _entries.remove(entry);
+     //_entries.removeWhere((e) => e.id == entry.id); //revisar
+     //await fetchEntries(); //versi funciona
       notifyListeners();
     } catch (e){
       print('Error al eliminar entry: $e');
@@ -131,7 +143,8 @@ IconData? get selectedMood => _selectedMood;
 
       await entryRef.set({
         'content': newContent,
-        'mood': getMoodLabel(newMood),
+       // 'mood': getMoodLabel(newMood),
+        'mood': newMood.codePoint,
         'timestamp': timestamp,
         'userId': user.uid
       });
@@ -150,7 +163,7 @@ IconData? get selectedMood => _selectedMood;
 
   //INICIALIZAR ENTRIES AL ABRIR APP
 
-
+  /*
   Future<void> fetchEntries() async{
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return ;
@@ -180,9 +193,46 @@ IconData? get selectedMood => _selectedMood;
       print('error al cargar entradas: $e');
     }
   }
+  */
+  Future<void> fetchEntries() async {
+  final user = FirebaseAuth.instance.currentUser;
+  if (user == null) return;
 
+  try {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('entries')
+        .orderBy('timestamp', descending: true)
+        .get();
 
+    _entries.clear();
 
+    for (var doc in snapshot.docs) {
+      final data = doc.data();
+
+      int moodCodePoint;
+      if (data['mood'] is int) {
+        moodCodePoint = data['mood'];
+      } else if (data['mood'] is String) {
+        moodCodePoint = int.tryParse(data['mood']) ?? 0;
+      } else {
+        moodCodePoint = 0;
+      }
+
+      _entries.add(Journey(
+        id: doc.id,
+        content: data['content'],
+        mood: IconData(moodCodePoint, fontFamily: 'MaterialIcons'),
+        timestamp: (data['timestamp'] as Timestamp).toDate(),
+      ));
+    }
+    notifyListeners();
+
+  } catch (e) {
+    print('error al cargar entradas: $e');
+  }
+}
 
 
 
@@ -198,6 +248,7 @@ IconData? get selectedMood => _selectedMood;
 
   //MÉTODO PARA ACTUALIZAR CONTENIDO
   //agregar new mood cuando sepas como hacerlo
+  /*
   void UpdateContent(String entryId, String newContent, IconData newMood){
     final index = _entries.indexWhere((entry) => entry.id == entryId);
     if (index != -1){
@@ -211,6 +262,40 @@ IconData? get selectedMood => _selectedMood;
     }
     
   }
+  */
+
+  Future<void> UpdateContent(String entryId, String newContent, IconData newMood) async {
+  final index = _entries.indexWhere((entry) => entry.id == entryId);
+  if (index == -1) return;
+
+  final user = FirebaseAuth.instance.currentUser;
+  if (user == null) return;
+
+  try {
+    await FirebaseFirestore.instance
+      .collection('users')
+      .doc(user.uid)
+      .collection('entries')
+      .doc(entryId)
+      .update({
+        'content': newContent,
+        'mood': newMood.codePoint,
+      });
+
+    // Actualizar en la lista local
+    _entries[index] = Journey(
+      id: entryId,
+      content: newContent,
+      mood: newMood,
+      timestamp: _entries[index].timestamp,
+    );
+
+    notifyListeners();
+
+  } catch (e) {
+    print('Error al actualizar la entrada: $e');
+  }
+}
   //MÉTODO PARA LIMPIAR EL MOOD PORQUE SINO SE QUEDA GUARDADO
   void ClearMood(){
     _selectedMood = null;
